@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <meta name="description" content="Professional portfolio with projects, skills, and contact information." />
+
+  <style>
+    :root {
+      --bg: #070a14;
+      --bg-alt: #0c0f1a;
+      --surface: rgba(255, 255, 255, 0.06);
+      --surface-strong: rgba(255, 255, 255, 0.10);
+      --text: #f5f7ff;
+      --muted: rgba(245, 247, 255, 0.72);
+      --accent: #a15cff;
+      --accent-2: #5b5cff;
+      --shadow: rgba(0, 0, 0, 0.45);
+
+      --header-bg: rgba(7, 10, 20, 0.6);
+      --header-border: rgba(255, 255, 255, 0.08);
+      --hover-bg: rgba(255, 255, 255, 0.1);
+
+      --card-bg: rgba(17, 20, 34, 0.64);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --footer-border: rgba(255, 255, 255, 0.08);
+
+      --radius: 18px;
+      --max: 1100px;
+      --font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: radial-gradient(circle at top, var(--bg-alt) 0%, var(--bg) 65%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--header-border);
+    }
+
+
+    .nav {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1.2rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--muted);
+      padding: 0.35rem 0.25rem;
+      border-radius: 999px;
+      transition: color 160ms var(--ease), background 160ms var(--ease);
+    }
+
+    nav a:hover {
+      color: var(--text);
+      background: var(--hover-bg);
+    }
+
+    .hero {
+      max-width: var(--max);
+      margin: 4rem auto 3.5rem;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2.5rem;
+    }
+
+    .hero__content {
+      max-width: 620px;
+      width: 100%;
+    }
+
+    .hero__tagline,
+    .section__label {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin: 0 0 1rem;
+    }
+
+    .aboutme {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin: 0 0 1rem;
+      
+    }
+
+    .hero__title {
+      font-size: clamp(3.8rem, 7vw, 6.2rem);
+      margin: 0 0 1.25rem;
+      line-height: 1.05;
+    }
+
+    .hero__title span {
+      display: inline-block;
+    }
+
+    .hero__title .accent {
+      color: var(--accent);
+    }
+
+    .hero__subtitle {
+      margin: 0 0 2rem;
+      font-size: 1.1rem;
+      color: rgba(245, 247, 255, 0.72);
+      
+    }
+
+    .hero__cta {
+      display: inline-flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.95rem 1.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(161, 92, 255, 0.55);
+      background: linear-gradient(120deg, rgba(161, 92, 255, 0.35), rgba(91, 92, 255, 0.18));
+      color: var(--text);
+      font-weight: 600;
+      letter-spacing: 0.025em;
+      transition: transform 180ms var(--ease), box-shadow 180ms var(--ease);
+    }
+
+    .btn.primary {
+      background: linear-gradient(120deg, rgba(161, 92, 255, 0.92), rgba(91, 92, 255, 0.83));
+      box-shadow: 0 14px 35px rgba(161, 92, 255, 0.35);
+    }
+
+    .btn.secondary {
+      background: rgba(0, 0, 0, 0.35);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 42px rgba(161, 92, 255, 0.25);
+    }
+
+    .btn svg {
+      width: 1.05em;
+      height: 1.05em;
+      display: block;
+      fill: currentColor;
+    }
+
+    .section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 3.5rem 1rem;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 3.5vw, 2.6rem);
+      margin: 0 0 1rem;
+    }
+
+    #about h2 {
+      color: var(--accent);
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    #about h3 {
+      color: var(--text);
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 0 2rem;
+    }
+
+    #contact {
+      text-align: center;
+    }
+
+    #contact .contact-card {
+      margin: 0 auto;
+    }
+
+    .section__intro {
+      color: rgba(245, 247, 255, 0.7);
+      margin: 0 0 2.5rem;
+      
+    }
+    
+    .grid {
+      display: grid;
+      gap: 1.75rem;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .card {
+      padding: 2rem;
+      border-radius: var(--radius);
+      background: rgba(17, 20, 34, 0.64);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 22px 42px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+      width: 10cm;
+    }
+
+    .contact-card {
+      width: 18cm;
+      margin: 0 auto;
+      padding: 2.25rem 2rem;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .contact-form .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .contact-form label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      font-weight: 600;
+      color: rgba(245, 247, 255, 0.75);
+      font-size: 0.9rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(0, 0, 0, 0.35);
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease);
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: rgba(161, 92, 255, 0.75);
+      box-shadow: 0 0 0 4px rgba(161, 92, 255, 0.16);
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124, 105, 255, 0.06), rgba(0, 0, 0, 0) 55%);
+      pointer-events: none;
+    }
+
+    .card h3 {
+      margin: 0 0 0.85rem;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      margin: 0 0 1.35rem;
+      color: rgba(245, 247, 255, 0.72);
+      line-height: 1.6;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(124, 105, 255, 0.12);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(161, 92, 255, 0.25);
+      user-select: none;
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0 0;
+    }
+
+    .skills li {
+      padding: 0.8rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(160, 92, 255, 0.781);
+      text-align: center;
+      font-weight: 600;
+      color: var(--text);
+      text-transform: capitalize;
+    }
+
+    .footer {
+      margin-top: 6rem;
+      padding: 3rem 1rem 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      color: rgba(245, 247, 255, 0.65);
+      font-size: 0.92rem;
+    }
+
+    .footer a {
+      color: rgba(161, 92, 255, 0.85);
+      font-weight: 600;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    
+    #about h1 {
+      font-family: var(--font);
+      font-size: 3.6rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin: 0 0 1rem;
+    
+}
+.lets{
+    font-size: 60px;
+}
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .section {
+        padding: 2.5rem 1rem;
+      }
+
+      .contact-card {
+        max-width: 100%;
+        padding: 2rem 1.5rem;
+      }
+
+      .contact-form .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --max: 100%;
+      }
+
+      .section {
+        padding: 2rem 1rem;
+      }
+
+      .hero__title {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+      }
+
+      h2 {
+        font-size: clamp(1.8rem, 5vw, 2.4rem);
+      }
+
+      .hero__subtitle {
+        font-size: 1rem;
+      }
+
+      .hero__cta {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      .skills {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
+
+      .card {
+        width: 100%;
+        padding: 1.5rem;
+      }
+
+      .contact-card {
+        padding: 1.5rem 1rem;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 2rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero__title {
+        font-size: clamp(2rem, 10vw, 3rem);
+      }
+
+      .section {
+        padding: 1.5rem 0.75rem;
+      }
+
+      .card {
+        padding: 1.25rem;
+      }
+
+      .btn {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
+      }
+
+      .skills {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="#">
+        <span>JM</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#work">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="home" aria-label="Hero">
+    <div class="hero__content">
+      <p class="hero__tagline">Welcome to my portfolio</p>
+      <h1 class="hero__title">
+        <span>I'm</span>
+        <span class="accent">Jenjuluru</span>
+        <span class="accent">Mounika</span>
+      </h1>
+      <p class="hero__subtitle">A passionate full stack developer crafting beautiful, performant web experiences. I turn ideas into elegant digital products</p>
+
+      <div class="hero__cta">
+        <a class="btn primary" href="#work">View My Work</a>
+        <a class="btn secondary" href="#contact">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+<br><br><br><br>
+  <section id="about" class="section">
+    <p class="aboutme">ABOUT ME</p>
+    <h1>Aspiring Full Stack Developer</h1>
+    <p class="section__intro">I'm a passionate and driven aspiring full stack developer with a strong foundation in both <br>frontend and backend technologies. I love building clean, efficient, and user-friendly web <br>applications. Always eager to learn new technologies and take on challenging projects.
+</p>
+<br><br>
+  </section>
+
+  <section id="skills" class="section">
+    <p class="section__label">Expertise</p>
+    <h2>Skills</h2>
+    <p class="section__intro">Tools and technologies I use daily to build modern web experiences.</p>
+
+    <ul class="skills">
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+      <li>Java</li>
+      <li>Python</li>
+      <li>C</li>
+      
+    </ul>
+  </section>
+<br><br><br><br>
+  <section id="work" class="section">
+    <p class="section__label">Portfolio</p>
+    <h2>Featured projects</h2>
+    <br><br>
+    <div class="grid grid-3">
+      <article class="card">
+        <h3>Velvet Brew Cafe</h3>
+        <p>Freshly brewed coffee, delicious bites, and a place to relax.</p>
+        <a class="btn" href="https://artisanal-cafe-design.lovable.app" aria-label="View project">
+          View project
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <h2 class="lets">Let's Work Together</h2>
+    <p class="section__intro">Have a project in mind? I'd love to hear from you.</p>
+
+    <div class="card contact-card">
+      <form class="contact-form" action="#" method="POST">
+        <div class="form-row">
+          <label>
+            Name
+            <input type="text" name="name" placeholder="Your name" required />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" placeholder="you@example.com" required />
+          </label>
+        </div>
+        <label>
+          Message
+          <textarea name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+        </label>
+        <button class="btn primary" type="submit">
+          <span>Send Message</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+
+    <p><a href="#home">Back to top</a></p>
+  </footer>
+
+  <script>
+    const aboutSection = document.getElementById('about');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    }, { threshold: 0.1 });
+    observer.observe(aboutSection);
+  </script>
+</body>
+</html>
